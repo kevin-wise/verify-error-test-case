@@ -1,0 +1,38 @@
+plugins {
+  id 'base'
+  id 'java'
+  id 'groovy'
+  id 'java-library'
+  id 'maven-publish'
+  id 'io.micronaut.library'
+}
+
+test {
+  useJUnitPlatform()
+}
+
+dependencies {
+  annotationProcessor platform("io.micronaut:micronaut-bom:${micronautVersion}")
+  annotationProcessor "io.micronaut:micronaut-inject-java"
+
+  implementation platform("io.micronaut:micronaut-bom:${micronautVersion}")
+  implementation "com.github.tomakehurst:wiremock-jre8-standalone:2.32.0"
+  implementation "io.micronaut.test:micronaut-test-junit5"
+}
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      from components.java
+
+      versionMapping {
+        usage('java-api') {
+          fromResolutionOf('runtimeClasspath')
+        }
+        usage('java-runtime') {
+          fromResolutionResult()
+        }
+      }
+    }
+  }
+}

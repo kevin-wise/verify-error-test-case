@@ -1,0 +1,9 @@
+*.bat text eol=crlf
+*.gradle text eol=lf
+*.groovy text eol=lf
+*.jar -text
+*.java text eol=lf
+*.lock text eol=lf
+*.md text eol=lf
+gradle.lockfile text eol=lf
+docs/* linguist-documentation

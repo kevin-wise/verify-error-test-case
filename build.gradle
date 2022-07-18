@@ -1,0 +1,40 @@
+buildscript {
+  configurations.classpath {
+    resolutionStrategy.activateDependencyLocking()
+  }
+}
+
+plugins {
+  id 'base'
+  id 'java'
+  id 'io.micronaut.library' version '3.3.2' apply false
+  id 'io.micronaut.minimal.application' version '3.3.2' apply false
+}
+
+description = 'VerifyError Test Service'
+
+allprojects {
+  group = 'com.testcase.verifyerror'
+}
+
+subprojects {
+
+  configurations.all { configuration ->
+    if (!['developmentOnly', 'archives'].contains(configuration.name)) {
+      configuration.resolutionStrategy.activateDependencyLocking()
+    }
+  }
+
+  tasks.register('generateLock') {
+    doFirst {
+      assert gradle.startParameter.writeDependencyLocks
+    }
+    doLast {
+      configurations.findAll {
+        // Add any custom filtering on the configurations to be resolved
+        it.canBeResolved
+      }.each { it.resolve() }
+    }
+  }
+
+}

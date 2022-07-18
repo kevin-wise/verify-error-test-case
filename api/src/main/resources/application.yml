@@ -1,0 +1,14 @@
+micronaut:
+  application:
+    name: test-verify-error-service
+  server:
+    port: 8080
+    thread-selection: io
+  executors:
+    tasks:
+      type: fixed
+      number-of-threads: 10
+---
+logger:
+  levels:
+    com.testcase: INFO
